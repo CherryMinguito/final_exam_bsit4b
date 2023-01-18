@@ -9,7 +9,6 @@
         <div class="addQuestion">
             <h3 slot="header">{{ modalMode === 'add' ? 'Add Question' : 'Edit Question' }}</h3>
             <div slot="body">
-            <input type="text" v-model="currentQuestion.text" />
             <label>Question:</label>
             <input style="border: 2px solid black" type="text" v-model="currentQuestion.text" />
             <label>Answer:</label>
@@ -31,21 +30,19 @@
         <tr>
             <th>No.</th>
             <th>Question</th>
-            <th>Choices</th>
             <th>Answer</th>
             <th style="width: 150px">Action</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="(question, index) in questions" :key="index">
-            <td>{{ index+1 }}</td>
-            <td>{{ question.text }}</td>
-            <td>{{ question.choices }}</td>
-            <td>
-            <button v-if="!question.showAnswer" @click="question.showAnswer = true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Show Answer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-            <span v-else>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ question.answer }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <td style="padding-top: 30px">{{ index+1 }}</td>
+            <td>{{ question.text }}<br><br>{{ question.choices }}</td>
+            <td style="width: 300px; padding-top: 30px">
+            <button v-if="!question.showAnswer" @click="question.showAnswer = true">Show Answer</button>
+            <button v-else @click="question.showAnswer = false">{{ question.answer }}</button>
             </td>
-            <td>
+            <td style="padding-top: 30px">
             <button class="btn btn-warning" @click="editQuestion(index)">Edit</button>
             <button class="btn btn-danger" @click="deleteQuestion(index)">Delete</button>
             </td>
