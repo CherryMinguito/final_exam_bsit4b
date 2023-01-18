@@ -1,83 +1,125 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <v-card class="logo py-4 d-flex justify-center">
-        <NuxtLogo />
-        <VuetifyLogo />
-      </v-card>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-          <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation
-            </a>.
-          </p>
-          <p>
-            If you have questions, please join the official <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord
-            </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board
-            </a>.
-          </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
+  <div>
+      <div class="container">
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" 
+          rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" 
+          crossorigin="anonymous">
+  
+  <modal v-if="showModal" @close="showModal = false">
+      <div class="addQuestion">
+          <h3 slot="header">{{ modalMode === 'add' ? 'Add Question' : 'Edit Question' }}</h3>
+          <div slot="body">
+          <label>Question:</label>
+          <input style="border: 2px solid black" type="text" v-model="currentQuestion.text" />
+          <label>Answer:</label>
+          <input style="border: 2px solid black" type="text" v-model="currentQuestion.answer" />
+          <label>Choices:</label>
+          <textarea v-model="currentQuestion.choices" style="height: 100px; width: 40%;"></textarea>
+          </div><br>
+          <div slot="footer">
+          <button class="btn btn-success" @click="saveQuestion">Save</button>&nbsp;&nbsp;
+          <button class="btn btn-danger" @click="showModal = false">Cancel</button>
           </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt Documentation
-          </a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/inspire"
-          >
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
-</template>
+      </div>
+  </modal>
+  <h1>Questionnaire</h1><br>
 
+  <button class="btn btn-primary" @click="addQuestion()">Add Question</button><br><br>
+  <table class="table">
+      <thead class="thead-light">
+      <tr>
+          <th>No.</th>
+          <th>Question</th>
+          <th>Answer</th>
+          <th style="width: 150px">Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="(question, index) in questions" :key="index">
+          <td style="padding-top: 30px">{{ index+1 }}</td>
+          <td>{{ question.text }}<br><br>{{ question.choices }}</td>
+          <td style="width: 300px; padding-top: 30px">
+          <button v-if="!question.showAnswer" @click="question.showAnswer = true">Show Answer</button>
+          <button v-else @click="question.showAnswer = false">{{ question.answer }}</button>
+          </td>
+          <td style="padding-top: 30px">
+          <button class="btn btn-warning" @click="editQuestion(index)">Edit</button>
+          <button class="btn btn-danger" @click="deleteQuestion(index)">Delete</button>
+          </td>
+      </tr>
+      </tbody>
+  </table>
+
+  
+  </div>
+</div>
+</template>
+<style>
+  body{
+      color: white;
+  }
+  .addQuestion{
+      padding: 20px;
+      margin-left: 10%;
+      margin-right: 10%;
+      background-color: rgba(227, 243, 0, 0.801);
+      color: black;
+      border-radius: 10px;
+  }
+  .table{
+      color: rgb(197, 184, 8);
+      background-color:  white;
+  }
+  .table input, textarea{
+      border: 2px solid black;
+  }
+</style>
 <script>
 export default {
-  name: 'IndexPage'
-}
+  name: "IndexPage",
+  data() {
+  return {
+      questions: [],
+      currentQuestion: {
+      text: '',
+      answer: '',
+      choices: '',
+      showAnswer: false
+      },
+      showModal: false,
+      modalMode: 'add'
+  }
+  },
+  methods: {
+  addQuestion() {
+      this.currentQuestion = {
+      text: '',
+      answer: '',
+      choices: '',
+      showAnswer: false
+      }
+      this.modalMode = 'add'
+      this.showModal = true
+  },
+  editQuestion(index) {
+      this.currentQuestion = {...this.questions[index]}
+      this.modalMode = 'edit'
+      this.showModal = true
+  },
+  deleteQuestion(index) {
+      this.questions.splice(index, 1)
+  },
+  saveQuestion() {
+      if (this.modalMode === 'add') {
+      this.questions.push(this.currentQuestion)
+      }
+      else if (this.modalMode === 'edit')
+      {
+          this.questions.splice(this.currentQuestion.text, 1)
+          this.questions.push(this.currentQuestion)
+      }
+      this.showModal = false
+  }
+  }
+  }
 </script>
