@@ -24,6 +24,41 @@
           <v-row>
             <v-col
               cols="12"
+              md="2"
+            >
+              <v-text-field
+                v-model="choice1"
+                :counter="20"
+                label="Choice 1 "
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col
+              cols="12"
+              md="2"
+            >
+              <v-text-field
+                v-model="choice2"
+                :counter="20"
+                label="Choice 2 "
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col
+              cols="12"
+              md="2"
+            >
+              <v-text-field
+                v-model="choice3"
+                :counter="20"
+                label="Choice 3 "
+                required
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col
+              cols="12"
               md="4"
             >
               <v-text-field
@@ -41,11 +76,6 @@
                 @click="addQuestion()"
               > Add </v-btn>
             </v-col>
-            <v-col>
-              <v-btn
-                elevation="2"
-              > Back </v-btn>
-            </v-col>
           </v-row>
         </v-container>
     </v-form>
@@ -54,7 +84,7 @@
 <script>
   export default{
       name: 'AddQuestionPage',
-      create(){
+      created(){
             if (process.browser){ 
                 this.updateData();
             }
@@ -63,6 +93,9 @@
           return{
               question: '',
               answer: '',
+              choice1: '',
+              choice2: '',
+              choice3: '',
               qList: []
           }
       },
@@ -86,8 +119,7 @@
                 else
                 {
                     var data = localStorage.getItem("data");
-                    console.log(data);
-                    this.qList.push(JSON.parse(data));
+                    this.qList = JSON.parse(data);
                 }
           },
           addQuestion(){
@@ -99,13 +131,16 @@
                   newID = 2;
 
               var q = {
-                      id: newID,
+                      id: this.qList.length == 0? 1 : this.qList[this.qList.length - 1].id + 1,
                       q: this.question,
+                      choices: [this.choice1, this.choice2, this.choice3],
                       a: this.answer
               }
 
-              this.qtList.push(q);
+              this.qList.push(q);
               localStorage.setItem("data", JSON.stringify(this.qList));
+
+              window.location = "http://localhost:3000/question";
           }
       }
   }
