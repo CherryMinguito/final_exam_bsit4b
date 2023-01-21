@@ -6,7 +6,7 @@
       <title>Home Page</title>
       <div class="box">
           <div class="inside">
-              <form class="container" method="POST" action="questionnaire">
+              <form class="container" method="POST" action="questions">
                   <button type="submit" class="btn btn-success">Questionnaire</button>
               </form>
           </div>

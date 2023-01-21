@@ -6,31 +6,31 @@
             crossorigin="anonymous">
     
     <modal v-if="showModal" @close="showModal = false">
-        <div class="addQuestion">
-            <h3 slot="header">{{ modalMode === 'add' ? 'Add Question' : 'Edit Question' }}</h3>
+        <div class="add">
+            <h3 slot="header" style="color:black">{{ modalMode === 'add' ? 'Add Question' : 'Edit Question' }}</h3>
             <div slot="body">
             <input type="text" v-model="currentQuestion.text" />
             <p>
-                <label>Question:</label>
-                <input style="border: 2px solid black; height: 50px; width: 40%" type="text" v-model="currentQuestion.text" />
+                <label style="color:black">Question:</label>
+                <input style="border: 3px solid black; height: 40px; width: 30%" type="text" v-model="currentQuestion.text" />
             </p>
             <p>
-                <label>Choices:</label>
+                <label style="color:black">Choices:</label>
                 <textarea v-model="currentQuestion.choices" style="height: 100px; width: 40%;"></textarea>
             </p>
             <p>
-                <label>Answer:</label>
-                <input style="border: 2px solid black; height: 50px; width: 40%" type="text" v-model="currentQuestion.answer" />
+                <label style="color:black">Answer:</label>
+                <input style="border: 3px solid black; height: 40px; width: 30%" type="text" v-model="currentQuestion.answer" />
             </p>
             </div><br>
             <div slot="footer">
             <button class="btn btn-success" @click="saveQuestion">Save</button>&nbsp;&nbsp;
-            <button class="btn btn-danger" @click="showModal = false">Cancel</button>
+            <button class="btn btn-dark" @click="showModal = false">Cancel</button>
             </div>
         </div>
     </modal>
 
-    <button class="btn btn-primary" @click="addQuestion()">Add Question</button><br><br>
+    <button class="btn btn-secondary" @click="add()">Add Question</button><br><br>
     <table class="table">
         <tbody>
         <tr v-for="(question, index) in questions" :key="index">
@@ -38,12 +38,12 @@
             <td>{{ question.text }}</td>
             <td>{{ question.choices }}</td>
             <td>
-            <button v-if="!question.showAnswer" @click="question.showAnswer = true">&amp;&amp;Show Answer&amp;&amp;</button>
-            <span v-else>&amp;&amp;{{ question.answer }}&amp;&amp;</span>
+            <button v-if="!question.showAnswer" @click="question.showAnswer = true">Show Answer</button>
+            <span v-else>{{ question.answer }}</span>
             </td>
             <td>
-            <button class="btn btn-warning" @click="editQuestion(index)">Edit</button>
-            <button class="btn btn-danger" @click="deleteQuestion(index)">Delete</button>
+            <button class="btn btn-info" @click="editQuestion(index)">Edit</button>
+            <button class="btn btn-warning" @click="deleteQuestion(index)">Delete</button>
             </td>
         </tr>
         </tbody>
@@ -57,11 +57,11 @@
     body{
         color: white;
     }
-    .addQuestion{
+    .add{
         padding: 20px;
         margin-left: 10%;
         margin-right: 10%;
-        background-color: rgb(212, 210, 208);
+        background-color: rgb(255, 255, 255);
         color: white;
         border-radius: 10px;
     }
@@ -70,12 +70,12 @@
         background-color:  white;
     }
     .table input, textarea{
-        border: 2px solid white;
+        border: 2px solid rgb(0, 0, 0);
     }
 </style>
 <script>
 export default {
-    name: "QuestionnairePage",
+    name: "Questions",
     data() {
     return {
         questions: [],
@@ -90,7 +90,7 @@ export default {
     }
     },
     methods: {
-    addQuestion() {
+    add() {
         this.currentQuestion = {
         text: '',
         answer: '',
