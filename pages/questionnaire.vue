@@ -7,24 +7,26 @@
     
     <modal v-if="showModal" @close="showModal = false">
         <div class="addQuestion">
-            <h3 slot="header">{{ modalMode === 'add' ? 'Add Question' : 'Edit Question' }}</h3>
+            <h3 slot="header">{{ modalMode === 'add' ? 'Add a question' : 'Edit the selected question' }}</h3>
             <div slot="body">
             <label>Question:</label>
             <input style="border: 2px solid black; margin-left: 10px;"  type="text" v-model="currentQuestion.text" />
-            <label style="margin-left: 30px">Answer:</label>
-            <input style="border: 2px solid black; margin-left: 10px;" type="text" v-model="currentQuestion.answer" />
+            <br><br>
+            <label style="margin-left: 15px">Answer:</label>
+            <input style="border: 2px solid black; margin-left: 5px;" type="text" v-model="currentQuestion.answer" />
             <br>
-            <label style="margin-left: 20px; margin-top: 20px;">Choices:</label>
+            <br>
+            <label style="margin-left: 10px; margin-top: 10px;">Choices:</label>
             <br>
             <textarea v-model="currentQuestion.choices" style="height: 100px; width: 40%; margin-top: 20px;"></textarea>
             </div><br>
             <div slot="footer">
             <button class="btn btn-success" @click="saveQuestion">Save</button>&nbsp;&nbsp;
-            <button class="btn btn-danger" @click="showModal = false">Cancel</button>
+            <button class="btn btn-danger" @click="showModal = false">Exit</button>
             </div>
         </div>
     </modal>
-    <h1 >Questionnaire</h1><br>
+    <h1 >My Questionnaire</h1><br>
 
     <button class="btn btn-primary" @click="addQuestion()">Add Question</button><br><br>
     <table class="table">
@@ -33,7 +35,7 @@
             <th>No.</th>
             <th>Question</th>
             <th>Answer</th>
-            <th style="width: 150px">Action</th>
+            <th style="width: 150px">Options</th>
         </tr>
         </thead>
         <tbody>
@@ -41,12 +43,12 @@
             <td style="padding-top: 30px">{{ index+1 }}</td>
             <td>{{ question.text }}<br><br>{{ question.choices }}</td>
             <td style="width: 300px; padding-top: 30px">
-            <button v-if="!question.showAnswer" @click="question.showAnswer = true">Show Answer</button>
+            <button v-if="!question.showAnswer" @click="question.showAnswer = true" id="btnShowAnswer">Show Answer</button>
             <button v-else @click="question.showAnswer = false">{{ question.answer }}</button>
             </td>
-            <td style="padding-top: 30px">
-            <button class="btn btn-warning" @click="editQuestion(index)">Edit</button>
-            <button class="btn btn-danger" @click="deleteQuestion(index)">Delete</button>
+            <td style="padding-top: 20px">
+            <button class="btn" @click="editQuestion(index)" id="btnAlter">Alter</button>      
+            <button class="btn" @click="deleteQuestion(index)" id="btnDel">Delete</button>
             </td>
         </tr>
         </tbody>
@@ -57,21 +59,45 @@
 </div>
 </template>
 <style>
+
+    #btnShowAnswer
+    {
+    position: absolute;
+    background-color:#0a0a23;
+    color: #fff;
+    border:none; 
+    border-radius:10px; 
+    padding:15px;
+    min-height:30px; 
+    min-width: 120px;
+    }
+    #btnAlter
+    {
+    background-color:#42ca60;
+    color: #fff;
+    border:none; 
+    }
+    #btnDel
+    {
+    background-color:#cc3b83;
+    color: #fff;
+    border:none;
+    }
     body{
         color: white;
     }
     .addQuestion{
-        text-align : center;
+        text-align : left;
         padding: 30px;
         margin-left: 10%;
         margin-right: 10%;
-        background-color: rgb(96, 69, 248);
+        background-color: rgb(245, 148, 109);
         color: black;
         border-radius: 10px;
     }
     .table{
         color: black;
-        background-color:  white;
+        background-color:  rgb(131, 138, 226);
     }
     .table input, textarea{
         border: 2px solid black;

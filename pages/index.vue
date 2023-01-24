@@ -6,9 +6,9 @@
       <title>Welcome Page</title>
       <div class="box">
           <div class="inside">
-              <h1 class="logo">PRACTICAL EXAM</h1><br><br>
+              <h1 class="logo">PRACTICAL EXAM IN AP6</h1><br><br>
               <form class="container" method="POST" action="questionnaire">
-                  <button type="submit" class="btn btn-success">VIEW QUESTIONNAIRE</button>
+                  <button type="submit" class="btn btn-primary">GO TO QUESTIONNAIRE</button>
               </form>
           </div>
       
