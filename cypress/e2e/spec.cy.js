@@ -1,0 +1,20 @@
+describe('template spec', () => {
+  it('passes', () => {
+    cy.visit('http://localhost:3000')
+    cy.get('#goQuestionaire').click()
+    cy.get('#addquestion').click()
+    cy.get('#btnexit').click()
+    cy.get('#addquestion').click()
+    cy.get('#questinput' ,{ timeout: 10000 }).eq(0).type('What is beauty?', { force: true })
+    cy.get('#answerinput').click()
+    cy.get('#answerinput').type("The essence that is inside of a person.")
+    cy.get('#choicestext').type("A. Your mom B. Within yourself C. The essence that is inside of a person.")
+    cy.get('#btnsave').click()
+    cy.get('#btnShowAnswer').click()
+    cy.get('#btnHideAnswer').click()
+    cy.get('#btnAlter').click()
+    cy.get('#btnexit').click()
+    cy.get('#btnDel').click()
+    
+  })
+})

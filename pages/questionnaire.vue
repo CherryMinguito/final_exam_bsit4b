@@ -10,25 +10,25 @@
             <h3 slot="header">{{ modalMode === 'add' ? 'Add a question' : 'Edit the selected question' }}</h3>
             <div slot="body">
             <label>Question:</label>
-            <input style="border: 2px solid black; margin-left: 10px;"  type="text" v-model="currentQuestion.text" />
+            <input id="questinput" style="border: 2px solid black; margin-left: 10px;"  type="text" v-model="currentQuestion.text" />
             <br><br>
             <label style="margin-left: 15px">Answer:</label>
-            <input style="border: 2px solid black; margin-left: 5px;" type="text" v-model="currentQuestion.answer" />
+            <input id="answerinput" style="border: 2px solid black; margin-left: 5px;" type="text" v-model="currentQuestion.answer" />
             <br>
             <br>
             <label style="margin-left: 10px; margin-top: 10px;">Choices:</label>
             <br>
-            <textarea v-model="currentQuestion.choices" style="height: 100px; width: 40%; margin-top: 20px;"></textarea>
+            <textarea id="choicestext" v-model="currentQuestion.choices" style="height: 100px; width: 40%; margin-top: 20px;"></textarea>
             </div><br>
             <div slot="footer">
-            <button class="btn btn-success" @click="saveQuestion">Save</button>&nbsp;&nbsp;
-            <button class="btn btn-danger" @click="showModal = false">Exit</button>
+            <button id="btnsave" class="btn btn-success" @click="saveQuestion">Save</button>&nbsp;&nbsp;
+            <button id="btnexit" class="btn btn-danger" @click="showModal = false">Exit</button>
             </div>
         </div>
     </modal>
     <h1 >My Questionnaire</h1><br>
 
-    <button class="btn btn-primary" @click="addQuestion()">Add Question</button><br><br>
+    <button id="addquestion" class="btn btn-primary" @click="addQuestion()">Add Question</button><br><br>
     <table class="table">
         <thead class="thead-light">
         <tr>
@@ -44,7 +44,7 @@
             <td>{{ question.text }}<br><br>{{ question.choices }}</td>
             <td style="width: 300px; padding-top: 30px">
             <button v-if="!question.showAnswer" @click="question.showAnswer = true" id="btnShowAnswer">Show Answer</button>
-            <button v-else @click="question.showAnswer = false">{{ question.answer }}</button>
+            <button v-else @click="question.showAnswer = false" id="btnHideAnswer">{{ question.answer }}</button>
             </td>
             <td style="padding-top: 20px">
             <button class="btn" @click="editQuestion(index)" id="btnAlter">Alter</button>      
